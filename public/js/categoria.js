@@ -47,6 +47,8 @@ function adicionarCategoria(destino) {
         dadosForm = $('#formAdd').serialize();
         nomcat = $('#nomcat').val();
         
+        $('#btnSalvar').attr('disable', 'true');
+        
         if (nomcat.trim() != "") {
         $.ajax({
 
@@ -56,26 +58,110 @@ function adicionarCategoria(destino) {
             dataType: 'html',
             success: function (data) {
                if (data == "true") {
-                   alert('Categoria adicionada com sucesso !');
                    
-                   //Redireciona o usuário
-                   //location.href='https://google.com';
+                msg = 'categoria adcionada com sucesso!';
+                $('#status').val('');
+                $('#status').html('<h4 class="sucesso" >'+msg+'</h4>');
+                $('#status').fadeIn(800);
                    
                    $('#nomcat').val('');
                    $('#nomcat').focus();
                    
+                   //destrava o botao
+                   $('#btnSalvar').removeAttr('disabled');
+                   
                } else {
+                   msg = 'Erro ao eliminar categoria!!';
+                $('#status').val('');
+                $('#status').html('<h4 class="erro" >'+msg+'</h4>');
+                $('#status').fadeIn(800);
+                   
                    alert('Falha ao adicionar categoria !');
                }
             },
             error: function (argument) {
-                alert('Erro ao eliminar categoria!');
+
+                
+                msg = 'Erro ao eliminar categoria!!';
+                $('#status').val('');
+                $('#status').html('<h4 class="erro" >'+msg+'</h4>');
+                $('#status').fadeIn(800);
             }
 
         });
         
     } else {
-        alert("Preencha todos os campos!");
+        
+        msg = 'Preencha todos os campos!';
+        $('#status').val('');
+        $('#status').html('<h4 class="erro" >'+msg+'</h4>');
+        $('#status').fadeIn(800);
+        
+        //destrava o botao
+        $('#btnSalvar').removeAttr('disabled');
+    }
+
+    return false;
+    
+}
+
+function editarCategoria(destino) {
+    
+        dadosForm = $('#formEdit').serialize();
+        nomcat = $('#nomcat').val();
+        
+        $('#btnEditar').attr('disable', 'true');
+        
+        if (nomcat.trim() != "") {
+        $.ajax({
+
+            method: 'post',
+            url: destino,
+            data: dadosForm,
+            dataType: 'html',
+            success: function (data) {
+               if (data == "true") {
+                   
+                msg = 'categoria Editada com sucesso!';
+                $('#status').val('');
+                $('#status').html('<h4 class="sucesso" >'+msg+'</h4>');
+                $('#status').fadeIn(800);
+                   
+                   $('#nomcat').val('');
+                   $('#nomcat').focus();
+                   
+                   //destrava o botao
+                   $('#btnEditar').removeAttr('disabled');
+                   
+               } else {
+                   msg = 'Erro ao editar categoria!!';
+                $('#status').val('');
+                $('#status').html('<h4 class="erro" >'+msg+'</h4>');
+                $('#status').fadeIn(800);
+                   
+                   alert('Falha ao editar categoria !');
+               }
+            },
+            error: function (argument) {
+
+                
+                msg = 'Erro ao e categoria!!';
+                $('#status').val('');
+                $('#status').html('<h4 class="erro" >'+msg+'</h4>');
+                $('#status').fadeIn(800);
+            }
+
+        });
+        
+    } else {
+        
+        msg = 'Preencha todos os campos!';
+        $('#status').val('');
+        $('#status').html('<h4 class="erro" >'+msg+'</h4>');
+        $('#status').fadeIn(800);
+        
+        //destrava o botao
+        $('#btnSalvar').removeAttr('disabled');
     }
 
     return false;
